@@ -6,12 +6,6 @@ using System.Threading.Tasks;
 
 namespace A2_DiceeGame_Dabrowski
 {
-    enum RollResult
-    {
-        Jackpot,
-        Win,
-        Lose
-    }
     class Dice
     {
         public int Face { get; }
