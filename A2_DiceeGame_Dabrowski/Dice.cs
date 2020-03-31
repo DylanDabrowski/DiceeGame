@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace A2_DiceeGame_Dabrowski
 {
+    enum RollResult
+    {
+        Jackpot,
+        Win,
+        Lose
+    }
     class Dice
     {
         public int Face { get; }
@@ -15,5 +21,11 @@ namespace A2_DiceeGame_Dabrowski
         {
             Max = 6;
         }
+
+        public void Roll()
+        {
+
+        }
+
     }
 }
