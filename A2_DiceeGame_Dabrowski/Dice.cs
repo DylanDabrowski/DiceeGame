@@ -8,12 +8,12 @@ namespace A2_DiceeGame_Dabrowski
 {
     class Dice
     {
-        public int Face { get; }
+        public int Face { get; private set; }
         public int Max { get; set; }
 
-        public Dice()
+        public Dice(int max)
         {
-            Max = 6;
+            Max = max;
         }
 
         public void Roll()
