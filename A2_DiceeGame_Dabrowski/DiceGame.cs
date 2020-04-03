@@ -27,9 +27,13 @@ namespace A2_DiceeGame_Dabrowski
 
         public void AddPlayer(Player player)
         {
-            if(IsGameOver)
-                Players.Add(player);
-            throw new Exception("AddPlayer Cannot be called while a game is in progress.");
+            if (!IsGameOver)
+                throw new Exception("AddPlayer Cannot be called while a game is in progress.");
+
+            Players.Add(player);
+            Console.WriteLine("Player Added!");
+            Console.ReadLine();
+
         }
 
         public void Start()
@@ -38,16 +42,21 @@ namespace A2_DiceeGame_Dabrowski
                 throw new Exception("You need AT LEAST 2 players to start the game!");
 
             IsGameOver = false;
-            ActivePlayer = Players[0];
+            ActivePlayer = Players[0]; 
             PlayTurn(ActivePlayer);
-
         }
 
         public void PlayTurn(Player player)
         {
+            if (player.History.Count == 5)
+                TheWinner();
+            Console.Clear();
+            Console.WriteLine("You Roll your Dice!:");
             foreach (Dice dice in Dices)
             {
                 RollDice(dice);
+                Console.WriteLine(dice.Face);
+                Console.ReadLine();
             }
 
             RollResult result = ComputeTurnResult();
@@ -67,18 +76,34 @@ namespace A2_DiceeGame_Dabrowski
             if (Dices.Distinct().Skip(1).Any())
             {
                 if (Dices[0].Face == 6)
+                {
+                    Console.WriteLine("Jackpot!!");
+                    Console.ReadLine();
                     return RollResult.Jackpot;
+                }
                 else
+                {
+                    Console.WriteLine("Win!");
+                    Console.ReadLine();
                     return RollResult.Win;
+                }
             }
-            else
-                return RollResult.Lose;
+            Console.WriteLine("Lose");
+            Console.ReadLine();
+            return RollResult.Lose;
         }
 
         public void UpdatePlayerStat(RollResult result, Player player)
         {
             if (result == RollResult.Jackpot)
+            {
                 player.Score += Dices.Count * 10;
+                if (player.History.Contains(RollResult.Jackpot))
+                {
+                    player.History.Add(result);
+                    TheWinner();
+                }
+            }
             else if (result == RollResult.Win)
                 player.Score += Dices.Count * 5;
 
@@ -87,13 +112,20 @@ namespace A2_DiceeGame_Dabrowski
 
         public void SetNextPlayer(Player player)
         {
-            int hcode = player.GetHashCode();
-            ActivePlayer = Players[hcode];
+            ActivePlayer = player;
+            PlayTurn(player);
         }
 
         public Player TheWinner()
         {
-            return ActivePlayer; //temp, just to get rid of red line
+            Player winner = ActivePlayer;
+            for (int i = 0; i < Players.Count; i++)
+            {
+                if (Players[i].Score > Players[i - 1].Score)
+                    winner = Players[i];
+            }
+
+            return winner;
         }
 
 

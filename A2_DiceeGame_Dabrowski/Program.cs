@@ -12,22 +12,36 @@ namespace A2_DiceeGame_Dabrowski
         {
             DiceGame game = new DiceGame(2);
 
-            Player player1 = new Player();
-            player1.Name = "Dylan";
-            Player player2 = new Player();
-            player2.Name = "Calum";
-            Player player3 = new Player();
-            player3.Name = "Kate";
 
-            game.AddPlayer(player1);
-            game.AddPlayer(player2);
-            game.AddPlayer(player3);
-
-
-            Console.WriteLine("Player Names:");
-            foreach (var player in game.Players)
+            while (1 == 1)
             {
-                Console.WriteLine(player.Name);
+                Console.WriteLine("--------------------");
+                Console.WriteLine(" 1: Add Player");
+                Console.WriteLine(" 2: Start Game");
+                Console.WriteLine("--------------------");
+                string input = Console.ReadLine();
+
+                if (input == "1")
+                {
+                    Console.Clear();
+                    Console.WriteLine("What is the players Name?");
+                    string name = Console.ReadLine();
+                    Player player = new Player();
+                    player.Name = name;
+                    game.AddPlayer(player);
+                }
+                else if (input == "2")
+                {
+                    game.Start();
+                    break;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Not a Proper Input");
+                    Console.ReadLine();
+                }
+                    
             }
 
         }
