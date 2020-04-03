@@ -18,7 +18,8 @@ namespace A2_DiceeGame_Dabrowski
 
         public void Roll()
         {
-
+            Random randomNumberGenerator = new Random();
+            Face = randomNumberGenerator.Next(1, 7);
         }
 
     }
